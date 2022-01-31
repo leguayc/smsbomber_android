@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         // Optionnel (seulement pour passer des arguments)
         i.putExtra("Key", "Value for the service");
         this.startService(i);*/
+
+        requestPermission();
     }
 
     private void requestPermission() {

@@ -29,8 +29,8 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
                 return new SmsCheckFragment();
             case 1:
                 return new ContactListFragment();
-            case 2:
-                return new ContactListFragment();
+            /*case 2:
+                return new SmsCheckFragment();*/
             default:
                 return null;
 
