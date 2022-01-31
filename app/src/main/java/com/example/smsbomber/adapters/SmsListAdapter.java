@@ -47,8 +47,8 @@ public class SmsListAdapter extends RecyclerView.Adapter<SmsListAdapter.ViewHold
     private final List<Sms> smsList;
 
     // Pass in the contact array into the constructor
-    public SmsListAdapter(List<Sms> taskList) {
-        this.smsList = taskList;
+    public SmsListAdapter(List<Sms> smsList) {
+        this.smsList = smsList;
     }
 
     // Create new views (invoked by the layout manager)

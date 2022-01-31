@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.example.smsbomber.R;
 
 public class SmsCheckFragment extends Fragment {
-    private RecyclerView taskList;
+    private RecyclerView smsList;
 
     public SmsCheckFragment() {
         // Required empty public constructor

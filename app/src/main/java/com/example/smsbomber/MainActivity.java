@@ -49,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Intent i = new Intent(this, SMSService.class);
+        /*Intent i = new Intent(this, SMSService.class);
         // Optionnel (seulement pour passer des arguments)
         i.putExtra("Key", "Value for the service");
-        this.startService(i);
+        this.startService(i);*/
     }
 
     private void requestPermission() {

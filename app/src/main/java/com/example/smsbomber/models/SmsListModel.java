@@ -20,7 +20,7 @@ public class SmsListModel {
             adapter.notifyItemInserted(smsList.size()-1);
     }
 
-    public void removeTask(Sms sms) {
+    public void removeSms(Sms sms) {
         int index = smsList.indexOf(sms);
         smsList.remove(sms);
 
