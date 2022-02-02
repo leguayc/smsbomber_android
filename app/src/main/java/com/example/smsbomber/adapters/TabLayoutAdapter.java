@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.smsbomber.fragments.ContactListFragment;
+import com.example.smsbomber.fragments.SettingsFragment;
 import com.example.smsbomber.fragments.SmsCheckFragment;
 
 public class TabLayoutAdapter extends FragmentPagerAdapter {
@@ -29,8 +30,8 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
                 return new SmsCheckFragment();
             case 1:
                 return new ContactListFragment();
-            /*case 2:
-                return new SmsCheckFragment();*/
+            case 2:
+                return new SettingsFragment();
             default:
                 return null;
 

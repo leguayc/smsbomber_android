@@ -1,7 +1,6 @@
 package com.example.smsbomber.models;
 
 import com.example.smsbomber.adapters.ContactListAdapter;
-import com.example.smsbomber.adapters.SmsListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +20,21 @@ public class ContactListModel {
             adapter.notifyItemInserted(contactList.size()-1);
     }
 
-    public void removeContact(Sms sms) {
-        int index = contactList.indexOf(sms);
-        contactList.remove(sms);
-
-        if (adapter != null)
-            adapter.notifyItemRemoved(index);
-    }
-
     public List<Contact> getContactList() {
         return contactList;
+    }
+
+    public void countMessageOfNumber(String number) {
+        for(int i = 0; i < contactList.size(); i++) {
+            if (number.equals(contactList.get(i).getNumber())) {
+                contactList.get(i).addMessageToCount();
+
+                if (adapter != null)
+                    adapter.notifyItemChanged(i);
+
+                break;
+            }
+        }
     }
 
     public ContactListModel setAdapter(ContactListAdapter adapter)

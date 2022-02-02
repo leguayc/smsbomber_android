@@ -2,11 +2,14 @@ package com.example.smsbomber;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.smsbomber.adapters.TabLayoutAdapter;
 import com.example.smsbomber.services.SMSService;
@@ -14,7 +17,10 @@ import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int REQUEST_READ_CONTACTS = 0;
+    public static final int REQUEST_READ_CONTACTS = 0;
+    public static final int REQUEST_RECEIVE_SMS = 1;
+    public static final int REQUEST_SEND_SMS = 2;
+    public static final int REQUEST_READ_SMS = 3;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
@@ -49,21 +55,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*Intent i = new Intent(this, SMSService.class);
-        // Optionnel (seulement pour passer des arguments)
-        i.putExtra("Key", "Value for the service");
-        this.startService(i);*/
 
-        requestPermission();
-    }
 
-    private void requestPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_CONTACTS)) {
-            // show UI part if you want here to show some rationale !!!
+        if(
+            (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED)
+            && (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED)
+        ) {
+            Intent i = new Intent(this, SMSService.class);
+            i.putExtra("Key", "Value for the service");
+            this.startService(i);
         } else {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.READ_CONTACTS},
-                    REQUEST_READ_CONTACTS);
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,new String[] { Manifest.permission.RECEIVE_SMS },REQUEST_RECEIVE_SMS);
+            }
         }
     }
 
@@ -74,6 +78,40 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case REQUEST_READ_CONTACTS: {
                 if (grantRes.length > 0 && grantRes[0] == PackageManager.PERMISSION_GRANTED) {// Permission granted
+                    Log.d("Permissions", "Contact granted permission");
+                } else {// Permission denied
+                }
+                return;
+            }
+
+            case REQUEST_RECEIVE_SMS: {
+                if (grantRes.length > 0 && grantRes[0] == PackageManager.PERMISSION_GRANTED) {// Permission granted
+                    Log.d("Permissions", "Receive sms granted permission");
+
+                    if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+                        Intent i = new Intent(this, SMSService.class);
+                        i.putExtra("Key", "Value for the service");
+                        this.startService(i);
+                    } else {
+                        ActivityCompat.requestPermissions(this,new String[] { Manifest.permission.SEND_SMS }, REQUEST_SEND_SMS);
+                    }
+
+                } else {// Permission denied
+                }
+                return;
+            }
+
+            case REQUEST_SEND_SMS: {
+                if (grantRes.length > 0 && grantRes[0] == PackageManager.PERMISSION_GRANTED) {// Permission granted
+                    Log.d("Permissions", "Send sms granted permission");
+                } else {// Permission denied
+                }
+                return;
+            }
+
+            case REQUEST_READ_SMS: {
+                if (grantRes.length > 0 && grantRes[0] == PackageManager.PERMISSION_GRANTED) {// Permission granted
+                    Log.d("Permissions", "Read sms granted permission");
                 } else {// Permission denied
                 }
                 return;
